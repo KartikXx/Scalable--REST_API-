@@ -1,0 +1,26 @@
+{
+  "name": "task-management-system",
+  "version": "1.0.0",
+  "description": "Full-stack task management system with JWT authentication and role-based access control",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces",
+    "start": "npm start --workspaces"
+  },
+  "keywords": [
+    "rest-api",
+    "jwt",
+    "authentication",
+    "task-management",
+    "react",
+    "express",
+    "postgresql"
+  ],
+  "author": "",
+  "license": "MIT"
+}
