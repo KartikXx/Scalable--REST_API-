@@ -1,8 +1,8 @@
 # Task Management System
 
-A full-stack task management app with JWT authentication & role-based access control. Users can register, login, and manage tasks (create, update, delete, filter by status).
+A full-stack task management app with JWT authentication and role-based access control. Users can register, login, and manage tasks (create, update, delete, filter by status).
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology |
 |-----------|-----------|
@@ -13,124 +13,120 @@ A full-stack task management app with JWT authentication & role-based access con
 | API Docs | Swagger/OpenAPI |
 | Deployment | Docker & Docker Compose |
 
-## 🚀 Quick Start
+## Quick Start
 
-### Option 1: Docker (Easiest)
+### Option 1: Docker
 ```bash
 cd /home/user/Desktop/task-frontend
 docker-compose up
 ```
 - Backend: http://localhost:3001
-- Frontend: Start separately below
 - API Docs: http://localhost:3001/api-docs
 
 ### Option 2: Local Development
 
-**Terminal 1 - Backend:**
+Terminal 1 - Backend:
 ```bash
 cd /home/user/Desktop/task-frontend/backend
 npm install
 npm run dev
-# Runs on http://localhost:3001
 ```
 
-**Terminal 2 - Frontend:**
+Terminal 2 - Frontend:
 ```bash
 cd /home/user/Desktop/task-frontend/frontend
 npm install
 npm run dev
-# Runs on http://localhost:5173
 ```
 
-**Database Setup:**
+Database setup:
 ```bash
 createdb task_management
 psql task_management < /home/user/Desktop/task-frontend/database/init.sql
 ```
 
-## 📋 API Endpoints
+## API Endpoints
 
-### Auth
+Auth:
 - `POST /api/v1/auth/register` - Register user
 - `POST /api/v1/auth/login` - Login (returns JWT)
 - `POST /api/v1/auth/refresh` - Refresh token
 - `POST /api/v1/auth/logout` - Logout
 
-### Tasks (Protected)
+Tasks (protected):
 - `GET /api/v1/tasks` - List user's tasks
 - `POST /api/v1/tasks` - Create task
 - `GET /api/v1/tasks/:id` - Get task
 - `PUT /api/v1/tasks/:id` - Update task
 - `DELETE /api/v1/tasks/:id` - Delete task
 
-**Full API docs at:** http://localhost:3001/api-docs
+Full API docs: http://localhost:3001/api-docs
 
-## 🔑 Generate Test JWT Token
+## Generate Test JWT Token
 
 ```bash
 cd /home/user/Desktop/task-frontend
 node generate-token.js 1 user@example.com user
 ```
 
-## 📝 Key Notes
+## Key Notes
 
-- **JWT Flow:** Access token (30 min) + refresh token (7 days, stored in httpOnly cookie)
-- **Password Security:** bcryptjs hashing with 12 salt rounds
-- **Input Validation:** All endpoints validate request data
-- **Rate Limiting:** Login attempts limited to 5/15 min
-- **Database:** Auto-indexed on email, user_id, created_at for performance
-- **Error Handling:** Consistent JSON responses with status codes
-- **CORS:** Configured for localhost:5173 (frontend)
-- **Logging:** Morgan (HTTP) + Winston (app errors) to `/logs/`
+- JWT access token (30 min) and refresh token (7 days, httpOnly cookie)
+- bcryptjs password hashing with 12 salt rounds
+- Input validation on all endpoints
+- Login attempts limited to 5 per 15 minutes
+- Indexes on email, user_id, created_at
+- Morgan HTTP logs and Winston app logs in `logs/`
+- CORS configured for http://localhost:5173
 
-## 🧪 Test Workflow
+## Test Workflow
 
-1. Register: `Email: test@example.com, Password: password123`
+1. Register: email `test@example.com`, password `password123`
 2. Login with credentials
-3. Create/Edit/Delete tasks from dashboard
-4. Check API logs in `backend/logs/`
+3. Create, edit, delete tasks from the UI
+4. Check logs in `backend/logs/`
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 task-frontend/
-├── backend/              # Express API
+├── backend/
 │   ├── src/
-│   │   ├── config/      # DB, env, constants
-│   │   ├── middleware/  # Auth, error handling
-│   │   ├── controllers/ # Route handlers
-│   │   ├── services/    # Business logic
-│   │   ├── routes/      # API endpoints
-│   │   └── utils/       # Validators, logging
+│   │   ├── config/
+│   │   ├── middleware/
+│   │   ├── controllers/
+│   │   ├── services/
+│   │   ├── routes/
+│   │   └── utils/
 │   └── .env
-├── frontend/            # React Vite app
+├── frontend/
 │   ├── src/
-│   │   ├── components/  # UI components
-│   │   ├── context/     # Auth/Task state
-│   │   ├── utils/       # API client, constants
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── utils/
 │   │   └── App.jsx
 │   └── .env
 ├── database/
-│   └── init.sql        # PostgreSQL schema
+│   └── init.sql
 └── docker-compose.yml
 ```
 
-## 🔐 Security
+## Security
 
-✅ JWT with signature verification  
-✅ Parameterized SQL queries (no injection)  
-✅ bcryptjs password hashing  
-✅ Helmet security headers  
-✅ CORS validation  
-✅ Input sanitization  
-✅ httpOnly cookies for refresh tokens  
+- JWT signature verification
+- Parameterized SQL queries
+- bcryptjs password hashing
+- Helmet security headers
+- CORS validation
+- Input sanitization
+- httpOnly cookies for refresh tokens
 
-## 📊 Database Tables
+## Database Tables
 
-**Users:** id, email, password_hash, role (user/admin), timestamps  
-**Tasks:** id, user_id, title, description, status (pending/in_progress/completed), priority (low/medium/high), timestamps
+Users: id, email, password_hash, role (user/admin), timestamps
+Tasks: id, user_id, title, description, status (pending/in_progress/completed), priority (low/medium/high), timestamps
 
-## ⚙️ Environment Variables
+## Environment Variables
 
 [backend/.env](backend/.env):
 ```
@@ -145,7 +141,7 @@ PORT=3001
 VITE_API_BASE_URL=http://localhost:3001
 ```
 
-## 🐛 Common Issues
+## Common Issues
 
 | Problem | Fix |
 |---------|-----|
@@ -154,12 +150,7 @@ VITE_API_BASE_URL=http://localhost:3001
 | CORS error | Verify FRONTEND_URL in backend .env |
 | Token expired immediately | Check JWT_ACCESS_EXPIRY format (should be `30m`) |
 
-## 📚 Docs
+## Docs
 
-- Full API: http://localhost:3001/api-docs (Swagger UI)
-- Backend: [backend/README.md](backend/README.md) (if exists)
-- Frontend: Standard React/Vite app
-
----
-
-**Status:** Start with Docker or local dev setup above.
+- Full API: http://localhost:3001/api-docs
+- Frontend: React/Vite app
